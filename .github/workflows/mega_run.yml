@@ -24,11 +24,7 @@ jobs:
     - name: Set Node Version Env
       run: echo "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true" >> $GITHUB_ENV
 
-    # ဖိုင်အသစ်ထဲမှ အပေါ့ပါးဆုံး Packages များကို လျှင်မြန်စွာ ထည့်သွင်းခြင်း
-    - name: Install lightweight dependencies
-      run: |
-        pip install -r requirements.txt
-
+    # Tools များ ထပ်သွင်းစရာမလိုဘဲ တိုက်ရိုက် Run စေခြင်း
     - name: Run Scraper Bot
       run: python mega_scraper.py
 
@@ -37,5 +33,5 @@ jobs:
         git config --global user.name "Mega Data Bot"
         git config --global user.email "databot@github.com"
         git add data/* || true
-        git commit -m "Scraped All Mobile Tabs Data via Cloudscraper API" || exit 0
+        git commit -m "Scraped All Mobile Tabs Data Safely" || exit 0
         git push
