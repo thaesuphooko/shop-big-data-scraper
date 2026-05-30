@@ -1,0 +1,36 @@
+name: Mega Auto Scraper 2026
+
+on:
+  schedule:
+    - cron: '0 17 * * *' # မြန်မာစံတော်ချိန် နေ့တိုင်း ည ၁၁ နာရီခွဲတွင် အလိုအလျောက် အလုပ်လုပ်မည်
+  workflow_dispatch: # ဖုန်းဖြင့် ကိုယ်တိုင် နှိပ်ရိုက်ခိုင်း၍လည်း ရစေရန်
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # GitHub ထဲသို့ Data များ ပြန်လည်ရေးသားခွင့် ပေးခြင်း
+
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        pip install requests beautifulsoup4 pandas
+
+    - name: Run Scraper Bot
+      run: python mega_scraper.py
+
+    - name: Commit and Push Big Data
+      run: |
+        git config --global user.name "Mega Data Bot"
+        git config --global user.email "databot@github.com"
+        git add data/*
+        git commit -m "Scraped & Partitioned New Big Data" || exit 0
+        git push
