@@ -2,8 +2,8 @@ name: Mega Auto Scraper 2026
 
 on:
   schedule:
-    - cron: '0 17 * * *' # မြန်မာစံတော်ချိန် နေ့တိုင်း ည ၁၁ နာရီခွဲတွင် Auto Run မည်
-  workflow_dispatch: # ကိုယ်တိုင်နှိပ်ပြီး Run ချင်လျှင်လည်း ရသည်
+    - cron: '0 17 * * *'
+  workflow_dispatch:
 
 jobs:
   build-and-run:
@@ -14,16 +14,21 @@ jobs:
 
     steps:
     - name: Check out repo
-      uses: actions/checkout@v4 # ဗားရှင်းအသစ်သို့ မြှင့်ထားသည်
+      uses: actions/checkout@v4
 
     - name: Set up Python
-      uses: actions/setup-python@v5 # ဗားရှင်းအသစ်သို့ မြှင့်ထားသည်
+      uses: actions/setup-python@v5
       with:
         python-version: '3.10'
 
+    # Node 24 ဖြင့် အလုပ်လုပ်စေရန် Force Variable တစ်ခု သတ်မှတ်ပေးခြင်း
+    - name: Set Node Version Env
+      run: echo "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true" >> $GITHUB_ENV
+
+    # လိုအပ်သော Packages များအား သေချာစွာ ထည့်သွင်းခြင်း
     - name: Install dependencies & Playwright Browser
       run: |
-        pip install playwright requests beautifulsoup4 pandas
+        pip install playwright beautifulsoup4 pandas
         playwright install chromium
 
     - name: Run Scraper Bot
@@ -34,5 +39,5 @@ jobs:
         git config --global user.name "Mega Data Bot"
         git config --global user.email "databot@github.com"
         git add data/*
-        git commit -m "Scraped All Categories and Products via Playwright 2026" || exit 0
+        git commit -m "Scraped All Categories Safely via Stealth Playwright" || exit 0
         git push
