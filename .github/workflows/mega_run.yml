@@ -21,17 +21,19 @@ jobs:
       with:
         python-version: '3.10'
 
-    - name: Set Node Version Env
-      run: echo "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true" >> $GITHUB_ENV
+    # အိတ် (Folder) မရှိသေးရင် အလိုအလျောက် အရင်ဆောက်ခိုင်းသည့်စနစ်
+    - name: Create Data Folder Safely
+      run: mkdir -p data
 
-    # Tools များ ထပ်သွင်းစရာမလိုဘဲ တိုက်ရိုက် Run စေခြင်း
+    # ဒေတာထုတ်လုပ်မည့် စက်ရုပ်ကို မောင်းနှင်ခြင်း
     - name: Run Scraper Bot
       run: python mega_scraper.py
 
+    # ဖိုင်တွဲအသစ်ကို GitHub ပေါ်သို့ သေချာပေါက် အောင်မြင်စွာ တင်ခြင်း
     - name: Commit and Push Big Data
       run: |
         git config --global user.name "Mega Data Bot"
         git config --global user.email "databot@github.com"
-        git add data/* || true
-        git commit -m "Scraped All Mobile Tabs Data Safely" || exit 0
+        git add data/ || true
+        git commit -m "Generated Static Products Data Safely" || exit 0
         git push
