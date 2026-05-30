@@ -4,8 +4,7 @@ import re
 
 def generate_smart_products(cat_name):
     """
-    သီစုရဲ့ လုပ်ငန်းသုံး အမျိုးအစားအလိုက် (၅၅% Discount တွက်ပြီးသား) 
-    အချက်အလက်များကို GitHub Server ပေါ်တွင် တိုက်ရိုက် အလိုအလျောက် ထုတ်လုပ်ပေးသည့် စနစ်
+    သီစုလုပ်ငန်းအတွက် အချက်အလက်များကို GitHub Server ပေါ်တွင် တိုက်ရိုက် အလိုအလျောက် ထုတ်လုပ်ပေးသည့် စနစ်
     """
     base_items = {
         "just_for_you": [
@@ -41,9 +40,9 @@ def generate_smart_products(cat_name):
         "electronic_accessories": [
             {"title": "Premium Braided Type-C Fast Cable (2m)", "price": 6500, "img": "https://images.unsplash.com/photo-1543269664-76bc3997d9ea?q=80&w=200"},
             {"title": "Universal Travel Adapter with Surge Protection", "price": 14500, "img": "https://images.unsplash.com/photo-1563770660941-20978e870e26?q=80&w=200"},
+            {"title": "Adjustable Desktop Phone and Tablet Stand", "price": 8500, "img": "https://images.unsplash.com/photo-1586495777744-4413f21062fa?q=80&w=200"}
 
-{"title": "Adjustable Desktop Phone and Tablet Stand", "price": 8500, "img": "https://images.unsplash.com/photo-1586495777744-4413f21062fa?q=80&w=200"}
-        ],
+],
         "womens_fashion": [
             {"title": "Elegant Vintage Linen Summer Dress", "price": 28000, "img": "https://images.unsplash.com/photo-1595777457583-95e059d581b8?q=80&w=200"},
             {"title": "Classic Leather Crossbody Shoulder Bag", "price": 35000, "img": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?q=80&w=200"},
@@ -69,11 +68,11 @@ def generate_smart_products(cat_name):
     products = []
     items_to_use = base_items.get(cat_name, base_items["just_for_you"])
     
-    # ဖိုင်တစ်ခုစီတွင် ပစ္စည်းအရေအတွက် စုံလင်စေရန် ပတ်ပြီး ဒေတာတိုးပွားစေခြင်း
+    # ပစ္စည်းအစုံအလင်ဖြစ်အောင် ပတ်ပြီး ဒေတာတိုးပွားစေခြင်း (၅၅% Discount ပါတွက်ပြီးသား)
     for i in range(1, 151):
         template = items_to_use[(i - 1) % len(items_to_use)]
-        orig_price = template["price"] + (i * 100) # စျေးနှုန်းများ မထပ်အောင် ပြုလုပ်ခြင်း
-        disc_price = int(orig_price * 0.45) # ၅၅% Discount တွက်ချက်ခြင်း
+        orig_price = template["price"] + (i * 100)
+        disc_price = int(orig_price * 0.45)
         
         products.append({
             "title": f"{template['title']} (Batch #{i:03d})",
@@ -105,12 +104,11 @@ def main():
     categories = [
         "just_for_you", "health_and_beauty", "tv_and_home_appliances",
         "groceries_and_pets", "babies_and_toys", "electronic_devices",
-
-"electronic_accessories", "womens_fashion", "home_and_lifestyle",
+        "electronic_accessories", "womens_fashion", "home_and_lifestyle",
         "watches_and_accessories", "mens_fashion"
     ]
     
-    print(f"Starting Automated Static Data Generator Engine for {len(categories)} Categories...")
+    print(f"Starting Automated Static Data Generator Engine...")
     
     for cat_name in categories:
         products = generate_smart_products(cat_name)
